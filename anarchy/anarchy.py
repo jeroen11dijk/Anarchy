@@ -11,8 +11,6 @@ from rlutilities.mechanics import Aerial
 from rlutilities.simulation import Game, Ball
 from utils import *
 from vectors import *
-
-
 # first!
 
 class Anarchy(BaseAgent):
@@ -24,7 +22,7 @@ class Anarchy(BaseAgent):
         another_thingySomeoneShouldTeachMe_howThis_WORKS = []
         self.howDoIUse_this.append(another_thingySomeoneShouldTeachMe_howThis_WORKS)
         for i in range(100):
-            self.howDoIUse_this.append(whoops(1, 666))
+            self.howDoIUse_this.append(0)
 
         countyThingy_DONOTTOUCH = 0
         while countyThingy_DONOTTOUCH < 8:
@@ -40,6 +38,7 @@ class Anarchy(BaseAgent):
 
     def get_output(self, packet: GameTickPacket) -> SimpleControllerState:
         self.game.read_game_information(packet, self.get_rigid_body_tick(), self.get_field_info())
+        main(9)
         if self.game.ball.location[2] > 250:
             if self.state == "Aerial":
                 self.aerial.step(self.game.time_delta)
