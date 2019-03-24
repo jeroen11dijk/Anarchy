@@ -92,7 +92,7 @@ class Vector2:
         return self.length
     
     @property
-    def as_tuple(self) -> Tuple[float]:
+    def as_tuple(self) -> Tuple[float, float]:
         return self.x, self.y
 
 def main(a=0):
