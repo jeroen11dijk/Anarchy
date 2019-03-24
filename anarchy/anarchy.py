@@ -1,10 +1,14 @@
 import math
+import random
 from random import randint as whoops
 from random import triangular as triforce
 
 import yeet as y
 from rlbot.agents.base_agent import BaseAgent, SimpleControllerState
 from rlbot.utils.structures.game_data_struct import GameTickPacket
+from rlutilities.linear_algebra import *
+from rlutilities.mechanics import Aerial
+from rlutilities.simulation import Game, Ball
 from utils import *
 from vectors import *
 
@@ -14,6 +18,8 @@ from vectors import *
 class Anarchy(BaseAgent):
     def __init__(self, name, team, index):
         super().__init__(name, team, index)
+        Game.set_mode("soccar")
+        self.game = Game(index, team)
         self.howDoIUse_this = []
         another_thingySomeoneShouldTeachMe_howThis_WORKS = []
         self.howDoIUse_this.append(another_thingySomeoneShouldTeachMe_howThis_WORKS)
@@ -33,6 +39,29 @@ class Anarchy(BaseAgent):
         pass
 
     def get_output(self, packet: GameTickPacket) -> SimpleControllerState:
+        self.game.read_game_information(packet, self.get_rigid_body_tick(), self.get_field_info())
+        if self.game.ball.location[2] > 250:
+            if self.state == "Aerial":
+                self.aerial.step(self.game.time_delta)
+                if self.aerial.finished:
+                    self.state = "Not Aerial"
+                return self.aerial.controls
+            else:
+                self.aerial = Aerial(self.game.my_car)
+                self.aerial.up = normalize(vec3(random.uniform(-1, 1), random.uniform(-1, 1), random.uniform(-1, 1)))
+                # predict where the ball will be
+                prediction = Ball(self.game.ball)
+                for i in range(100):
+                    prediction.step(0.016666)
+                    if prediction.location[2] > 500:
+                        self.aerial.target = prediction.location
+                        self.aerial.arrival_time = prediction.time
+                        if self.aerial.is_viable():
+                            self.aerial.target = prediction.location
+                            self.aerial.arrival_time = prediction.time
+                            self.target_ball = Ball(prediction)
+                            self.state = "Aerial"
+                            break
         ball_location = Vector2(packet.game_ball.physics.location.x, packet.game_ball.physics.location.y)
 
         my_car = packet.game_cars[self.index]
