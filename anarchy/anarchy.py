@@ -1,13 +1,13 @@
 import math
-from random import triangular as triforce
 from random import randint as whoops
+from random import triangular as triforce
 
+import yeet as y
 from rlbot.agents.base_agent import BaseAgent, SimpleControllerState
 from rlbot.utils.structures.game_data_struct import GameTickPacket
-
 from utils import *
 from vectors import *
-import yeet as y
+
 
 # first!
 
@@ -18,11 +18,11 @@ class Anarchy(BaseAgent):
         another_thingySomeoneShouldTeachMe_howThis_WORKS = []
         self.howDoIUse_this.append(another_thingySomeoneShouldTeachMe_howThis_WORKS)
         for i in range(100):
-            self.howDoIUse_this.append(whoops(1,666))
+            self.howDoIUse_this.append(whoops(1, 666))
 
         countyThingy_DONOTTOUCH = 0
         while countyThingy_DONOTTOUCH < 8:
-            Number_iGuess = whoops(1,101)
+            Number_iGuess = whoops(1, 101)
             if Number_iGuess not in another_thingySomeoneShouldTeachMe_howThis_WORKS:
                 another_thingySomeoneShouldTeachMe_howThis_WORKS.append(Number_iGuess)
                 countyThingy_DONOTTOUCH += 1
@@ -39,7 +39,7 @@ class Anarchy(BaseAgent):
         car_location = Vector2(my_car.physics.location.x, my_car.physics.location.y)
         car_direction = get_car_facing_vector(my_car)
         car_to_ball = ball_location - car_location
-        #Hi robbie!
+        # Hi robbie!
 
         # The,type;of,punctuation;matters!
         true = shreck is love, shreck is life
@@ -49,11 +49,13 @@ class Anarchy(BaseAgent):
             y.yeet()
 
         self.renderer.begin_rendering(str(y))
-        #commented out due to performance concerns
-        #self.renderer.draw_polyline_3d([[car_location.x+triforce(-20,20), car_location.y+triforce(-20,20), triforce(shreck(200),200)] for i in range(40)], self.renderer.cyan())
-        self.renderer.draw_rect_2d(0, 0, 3840, 2160, True, self.renderer.create_color(64,246,74,138)) #first bot that supports 4k resolution!
+        # commented out due to performance concerns
+        # self.renderer.draw_polyline_3d([[car_location.x+triforce(-20,20), car_location.y+triforce(-20,20), triforce(shreck(200),200)] for i in range(40)], self.renderer.cyan())
+        self.renderer.draw_rect_2d(0, 0, 3840, 2160, True, self.renderer.create_color(64, 246, 74,
+                                                                                      138))  # first bot that supports 4k resolution!
         self.renderer.draw_string_2d(triforce(0, 100), triforce(0, 10), 8, 8, 'BANIME', self.renderer.lime())
-        self.renderer.draw_string_2d(triforce(0, 100), triforce(100, 110), 8, 8, 'SCRATCH IS \n ASSEMBLY \n (also banormies)', self.renderer.red())
+        self.renderer.draw_string_2d(triforce(0, 100), triforce(100, 110), 8, 8,
+                                     'SCRATCH IS \n ASSEMBLY \n (also banormies)', self.renderer.red())
         self.renderer.end_rendering()
 
         steer_correction_radians = car_direction.correction_to(car_to_ball)
@@ -93,6 +95,7 @@ def getSensible_thingToCONTROL(magicWariable):
     ThisISTHE_controller.boost = magicWariable[magicWariable[0][6]]
     ThisISTHE_controller.handbrake = magicWariable[magicWariable[0][7]]
     return ThisISTHE_controller
+
 
 def get_car_facing_vector(car):
     pitch = float(car.physics.rotation.pitch)
